@@ -6,9 +6,8 @@ export default function ExploreLayout({
     children: React.ReactNode;
 }) {
     return (
-        // We lock the explore page to full height and hide standard scrollbars
-        // The entire experience is driven by the 3D Canvas
-        <section className="bg-obsidian w-screen h-screen overflow-hidden text-neutral-200">
+        // Netflix-style layout: scrollable vertically, clipped horizontally
+        <section className="bg-obsidian-900 w-screen min-h-screen overflow-y-auto overflow-x-hidden text-neutral-200">
             {children}
         </section>
     );
