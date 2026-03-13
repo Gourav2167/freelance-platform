@@ -10,9 +10,12 @@ export function createClient() {
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
     if (!url || !key) {
+        if (process.env.NODE_ENV === 'production') {
+            console.error("CRITICAL: Supabase keys missing in browser environment.");
+        }
         return createBrowserClient(
-            'https://placeholder.supabase.co',
-            'placeholder'
+            url || 'https://placeholder.supabase.co',
+            key || 'placeholder'
         );
     }
 

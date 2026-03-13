@@ -17,6 +17,10 @@ const SceneWrapper = React.memo(function SceneWrapper() {
     const containerRef = React.useRef<HTMLDivElement>(null);
     const pathname = usePathname();
     const isLoginPage = pathname === "/login";
+    const isExplorePage = pathname === "/explore";
+
+    // Prevent redundant WebGL context creation on explore page
+    if (isExplorePage) return null;
 
     React.useEffect(() => {
         const observer = new IntersectionObserver(

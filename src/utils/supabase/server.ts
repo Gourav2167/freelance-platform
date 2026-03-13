@@ -5,11 +5,16 @@ export function createClient() {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
+    // If keys are missing, we handle it based on environment
     if (!url || !key) {
-        // Return a mock or handle missing env vars during build
+        // During build time (prerendering), we use placeholders to avoid crashes
+        if (process.env.NODE_ENV === 'production' && !process.env.VERCEL) {
+             console.error("CRITICAL: Supabase keys missing in production environment.");
+        }
+        
         return createServerClient(
-            'https://placeholder.supabase.co',
-            'placeholder',
+            url || 'https://placeholder.supabase.co',
+            key || 'placeholder',
             { cookies: { getAll: () => [], setAll: () => {} } }
         )
     }
