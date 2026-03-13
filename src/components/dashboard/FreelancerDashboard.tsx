@@ -34,7 +34,7 @@ export default function FreelancerDashboard() {
                 <div className="mb-16 flex justify-between items-end animate-item">
                     <div>
                         <h1 className="text-5xl font-black tracking-tighter uppercase drop-shadow-2xl text-white font-outfit">Freelancer Dashboard</h1>
-                        <p className="text-emerald-500 font-mono text-[10px] tracking-[0.4em] mt-4 uppercase font-black opacity-80">Identity Verified // Operative Status: Active</p>
+                        <p className="text-emerald-500 font-mono text-[10px] tracking-[0.4em] mt-4 uppercase font-black opacity-80">Profile Verified // Account Status: Active</p>
                     </div>
                     <div className="glass-panel px-8 py-3 font-mono text-[10px] text-neutral-400 tracking-[0.3em] font-black border border-white/5 uppercase rounded-full shadow-2xl">
                         Vault connection: <span className="text-emerald-500 animate-pulse">SECURE</span>
@@ -61,8 +61,8 @@ export default function FreelancerDashboard() {
                     />
                     <StatWidget
                         title="Total Earnings"
-                        value="$14,250"
-                        trend="+$3,400"
+                        value="₹14,250"
+                        trend="+₹3,400"
                         trendUp={true}
                         icon={Banknote}
                         colorClass="from-emerald-500/10 to-emerald-700/10"
@@ -81,7 +81,7 @@ export default function FreelancerDashboard() {
                         </div>
 
                         <div className="flex justify-between items-center mb-10 relative z-10">
-                            <h2 className="text-white text-[10px] tracking-[0.4em] uppercase font-black opacity-50">Intelligence Stream</h2>
+                            <h2 className="text-white text-[10px] tracking-[0.4em] uppercase font-black opacity-50">Updates</h2>
                         </div>
 
                         <div className="space-y-6 relative z-10">
@@ -98,7 +98,7 @@ export default function FreelancerDashboard() {
                         </div>
 
                         <button className="w-full mt-12 py-4 bg-white/5 hover:bg-white/10 text-white text-[10px] uppercase tracking-[0.3em] font-black border border-white/5 rounded-xl transition-all shadow-lg hover:shadow-emerald-500/5">
-                            Access Security Log
+                            Access Activity Log
                         </button>
                     </div>
                 </div>

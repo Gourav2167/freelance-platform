@@ -1,0 +1,46 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - navigation [ref=e7]:
+    - generic [ref=e8]:
+      - link "VASUDHA" [ref=e9] [cursor=pointer]:
+        - /url: /
+        - text: VASUDHA
+      - generic [ref=e10]:
+        - link "Home" [ref=e11] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - text: Home
+        - link "Explore" [ref=e15] [cursor=pointer]:
+          - /url: /explore
+          - img [ref=e16]
+          - text: Explore
+        - link "Dashboard" [ref=e19] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=e20]
+          - text: Dashboard
+        - link "Profile" [ref=e25] [cursor=pointer]:
+          - /url: /profile
+          - img [ref=e26]
+          - text: Profile
+    - link "Inbound Access" [ref=e30] [cursor=pointer]:
+      - /url: /login
+  - main [ref=e31]:
+    - main [ref=e33]:
+      - generic [ref=e34]:
+        - heading "Sign In" [level=1] [ref=e35]
+        - paragraph [ref=e36]: Choose Access Level
+      - generic [ref=e37]:
+        - button "Freelancer Access global project directory" [active] [ref=e38]:
+          - img [ref=e40]
+          - generic [ref=e43]:
+            - heading "Freelancer" [level=3] [ref=e44]
+            - paragraph [ref=e45]: Access global project directory
+        - button "Organization Deploy contracts & hire talent" [ref=e46]:
+          - img [ref=e48]
+          - generic [ref=e52]:
+            - heading "Organization" [level=3] [ref=e53]
+            - paragraph [ref=e54]: Deploy contracts & hire talent
+  - region "Notifications alt+T"
+```

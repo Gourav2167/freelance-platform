@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LogOut, Home, Compass, LayoutDashboard } from "lucide-react";
+import { LogOut, Home, Compass, LayoutDashboard, User } from "lucide-react";
 import { useUserStore } from "@/lib/userStore";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useRef } from "react";
@@ -16,7 +16,7 @@ export default function Navigation() {
     useEffect(() => {
         const checkSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();
-            if (session) {
+            if (session && (!isAuthenticated || !role)) {
                 await syncProfile(supabase);
             }
         };
@@ -77,7 +77,8 @@ export default function Navigation() {
                     {[
                         { href: '/', icon: Home, label: 'Home' },
                         { href: '/explore', icon: Compass, label: 'Explore' },
-                        { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' }
+                        { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+                        { href: '/profile', icon: User, label: 'Profile' }
                     ].map((item, i) => (
                         <Link
                             key={item.href}
@@ -98,7 +99,7 @@ export default function Navigation() {
                 {isAuthenticated ? (
                     <div className="flex items-center gap-4 glass-panel pl-6 pr-2 py-2 rounded-full border border-white/5 shadow-2xl backdrop-blur-3xl">
                         <div className="flex flex-col items-end">
-                            <span className="text-[7px] text-emerald-500 uppercase tracking-widest font-black leading-none mb-1">AUTH ACTIVE</span>
+                            <span className="text-[7px] text-emerald-500 uppercase tracking-widest font-black leading-none mb-1">LOGGED IN</span>
                             <span className="text-[10px] text-white uppercase tracking-tighter font-black font-outfit">
                                 {role === 'freelancer' ? 'Freelancer' : 'Organization'}
                             </span>
@@ -119,7 +120,7 @@ export default function Navigation() {
                         onMouseLeave={() => handleHoverExit(4)}
                         className="glass-panel px-8 py-3 rounded-full border border-white/10 text-white text-[10px] uppercase tracking-[0.2em] font-black hover:bg-white/10 transition-all shadow-xl font-outfit"
                     >
-                        Inbound Access
+                        Login / Sign Up
                     </Link>
                 )}
             </div>

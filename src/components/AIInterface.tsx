@@ -84,8 +84,8 @@ export default function AIInterface() {
                             <Sparkles className="w-5 h-5 text-emerald-400" />
                         </div>
                         <div className="flex flex-col">
-                            <h2 className="text-white text-lg font-black tracking-widest uppercase font-outfit">Nexus AI</h2>
-                            <span className="text-[8px] text-emerald-500 font-black tracking-[0.3em] uppercase opacity-60">Context Protocol v2.4</span>
+                            <h2 className="text-white text-lg font-black tracking-widest uppercase font-outfit">Vasudha AI</h2>
+                            <span className="text-[8px] text-emerald-500 font-black tracking-[0.3em] uppercase opacity-60">System Status v2.4</span>
                         </div>
                     </div>
                     <button onClick={() => setOpen(false)} className="p-3 hover:bg-white/5 rounded-full transition-all text-neutral-500 hover:text-white">
@@ -97,7 +97,7 @@ export default function AIInterface() {
                     {messages.map((m, i) => (
                         <div key={i} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
                             <span className="text-[8px] text-neutral-500 font-black tracking-[0.2em] mb-2 uppercase px-1">
-                                {m.role === 'user' ? 'Individual' : 'Nexus Assistant'}
+                                {m.role === 'user' ? 'User' : 'Assistant'}
                             </span>
                             <div
                                 className={`p-5 rounded-2xl text-sm leading-relaxed font-medium ${m.role === 'user'
@@ -119,7 +119,7 @@ export default function AIInterface() {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                            placeholder="Interrogate project context..."
+                            placeholder="Ask about project details..."
                             className="w-full bg-white/[0.02] border border-white/10 rounded-xl py-5 pl-6 pr-14 text-xs font-black tracking-widest text-white focus:outline-none focus:border-emerald-500/30 transition-all font-mono uppercase"
                         />
                         <button

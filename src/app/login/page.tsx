@@ -5,8 +5,8 @@ import { createClient } from "@/utils/supabase/client";
 import { useUserStore, UserRole } from "@/lib/userStore";
 import { User, Building2, ArrowLeft, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { gsap } from "gsap";
-import SceneWrapper from "@/components/canvas/SceneWrapper";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ export default function LoginPage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [step, setStep] = useState<"role" | "auth">("role");
 
-    const { setRole, role } = useUserStore();
+    const { setRole, role, syncProfile } = useUserStore();
     const supabase = createClient();
     const router = useRouter();
 
@@ -25,9 +25,22 @@ export default function LoginPage() {
     const formRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (mainRef.current) {
+        const checkExistingSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                await syncProfile(supabase);
+                router.push("/dashboard");
+            }
+        };
+        checkExistingSession();
+        router.prefetch("/dashboard");
+    }, [router, supabase.auth, syncProfile]);
+
+    useEffect(() => {
+        const animateItems = mainRef.current?.querySelectorAll('.animate-item');
+        if (animateItems && animateItems.length > 0) {
             const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-            tl.fromTo(mainRef.current.querySelectorAll('.animate-item'),
+            tl.fromTo(animateItems,
                 { y: 30, opacity: 0 },
                 { y: 0, opacity: 1, stagger: 0.1, duration: 1.5, delay: 0.2 }
             );
@@ -65,10 +78,15 @@ export default function LoginPage() {
                 console.error("LOGIN_ERROR:", error);
                 setStatus("error");
                 setErrorMessage(error.message);
-            } else {
-                setStatus("success");
-                setTimeout(() => router.push("/dashboard"), 1000);
-            }
+                toast.error("LOGIN FAILED", {
+                    description: error.message
+                });
+                return;
+            } 
+            
+            setStatus("success");
+            toast.success("Authentication confirmed. Redirecting to dashboard...");
+            router.push("/dashboard");
         } else {
             const { error } = await supabase.auth.signUp({
                 email,
@@ -83,35 +101,29 @@ export default function LoginPage() {
             if (error) {
                 setStatus("error");
                 setErrorMessage(error.message);
+                toast.error("INITIALIZATION FAILED", {
+                    description: error.message
+                });
             } else {
                 setStatus("success");
+                toast.success("IDENTITY LOGGED", {
+                    description: "Please check your inbox for the secure confirmation link."
+                });
                 setTimeout(() => setAuthMode("login"), 2000);
             }
         }
     };
 
     return (
-        <div className="relative w-screen h-screen bg-[#030305] flex flex-col items-center justify-center overflow-hidden">
-            <SceneWrapper />
-
-            <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent opacity-30" />
-
-            <div
-                className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
-                style={{
-                    backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
-                    backgroundSize: `4rem 4rem`
-                }}
-            />
-
-            <main ref={mainRef} className="relative z-10 flex flex-col items-center w-full max-w-md px-8">
+        <div className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
+            <main ref={mainRef} className="relative z-10 flex flex-col items-center w-full max-w-md px-8 py-20">
                 <div className="mb-12 text-center w-full animate-item">
                     <h1 className="text-white text-4xl font-black tracking-[0.2em] uppercase mb-2 drop-shadow-2xl">
                         {authMode === "login" ? "Sign In" : "Register"}
                     </h1>
                     <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
                     <p className="text-neutral-500 text-[10px] tracking-[0.3em] uppercase mt-4 font-bold">
-                        {step === "role" ? "Choose Access Level" : `${role} Identity Verification`}
+                        {step === "role" ? "Choose Account Type" : `${role || 'Secure'} Account Verification`}
                     </p>
                 </div>
 
@@ -152,7 +164,7 @@ export default function LoginPage() {
                                 </div>
                                 <h2 className="text-white text-xl font-bold tracking-[0.2em] mb-3">ACCOUNT CREATED</h2>
                                 <p className="text-neutral-400 text-xs leading-relaxed uppercase tracking-widest">
-                                    Initialization complete. Proceeding to login...
+                                    Signup complete. Proceeding to login...
                                 </p>
                             </div>
                         ) : (
@@ -213,7 +225,7 @@ export default function LoginPage() {
                                         disabled={status === "loading" || !email || !password}
                                         className="w-full py-6 bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-white text-[11px] font-black tracking-[0.4em] uppercase transition-all border border-emerald-500/20 hover:border-emerald-400 rounded-xl disabled:opacity-30 shadow-[0_0_30px_rgba(16,185,129,0.1)] hover:shadow-[0_0_40px_rgba(16,185,129,0.3)]"
                                     >
-                                        {status === "loading" ? "SYNCHRONIZING..." : authMode === "login" ? "AUTHENTICATE" : "INITIALIZE ACCOUNT"}
+                                        {status === "loading" ? "AUTHENTICATING..." : authMode === "login" ? "SIGN IN" : "CREATE ACCOUNT"}
                                     </button>
 
                                     <div className="flex justify-center mt-6">
@@ -222,7 +234,7 @@ export default function LoginPage() {
                                             onClick={() => setAuthMode(authMode === "login" ? "signup" : "login")}
                                             className="text-[9px] uppercase tracking-[0.3em] text-neutral-500 hover:text-emerald-400 transition-colors font-black"
                                         >
-                                            {authMode === "login" ? "[ Establish New Link ]" : "[ Return to Secure Access ]"}
+                                            {authMode === "login" ? "[ Create New Account ]" : "[ Sign In to Existing Account ]"}
                                         </button>
                                     </div>
                                 </form>
@@ -231,16 +243,7 @@ export default function LoginPage() {
                     </div>
                 )}
 
-                {status === "error" && (
-                    <div className="mt-12 w-full p-4 border border-red-500/20 bg-red-500/5 text-red-500 text-[9px] tracking-[0.2em] font-bold text-center uppercase animate-item rounded-lg">
-                        PROTOCOL_FAILURE: {errorMessage}
-                        {errorMessage.includes("Email not confirmed") && (
-                            <div className="mt-2 text-emerald-500">
-                                CHECK YOUR INBOX FOR CONFIRMATION LINK.
-                            </div>
-                        )}
-                    </div>
-                )}
+                {/* Inline error box removed. Relying on global Toast notifications. */}
             </main>
         </div>
     );

@@ -1,26 +1,30 @@
-"use client";
-
 import { useState } from "react";
 import { Send, Cpu, Sparkles } from "lucide-react";
 import { Canvas } from "@react-three/fiber";
 import AlignmentMeterShader from "./canvas/AlignmentMeterShader";
+import { toast } from "sonner";
+import { createClient } from "@/utils/supabase/client";
 
-export default function BiddingEditor() {
+interface BiddingEditorProps {
+    missionId?: string;
+    onSuccess?: () => void;
+}
+
+export default function BiddingEditor({ missionId = "demo-project-id", onSuccess }: BiddingEditorProps) {
     const [proposal, setProposal] = useState("");
-    const [alignment, setAlignment] = useState(0.2); // Start low
+    const [alignment, setAlignment] = useState(0.2);
+    const supabase = createClient();
 
-    // Calculate alignment roughly based on keywords typed
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const text = e.target.value;
         setProposal(text);
 
-        // Fake alignment calculation mapping to client specs:
         const keywords = ['react', 'node', 'budget', 'timeline', 'scalable'];
         const lower = text.toLowerCase();
 
         let score = 0.2;
         keywords.forEach(kw => {
-            if (lower.includes(kw)) score += 0.16; // 5 * 0.16 = 0.8, max 1.0
+            if (lower.includes(kw)) score += 0.16;
         });
 
         setAlignment(Math.min(score, 1.0));
@@ -29,7 +33,44 @@ export default function BiddingEditor() {
     const generateDraft = () => {
         const draft = "Hi there,\n\nI understand you need a scalable application built with React and Node.js. My timeline allows me to complete this within your required budget constraints.";
         setProposal(draft);
-        setAlignment(0.95); // High relevance score for generated draft
+        setAlignment(0.95);
+        toast.success("Proposal Draft generated successfully.");
+    };
+
+    const handleSubmit = async () => {
+        if (!proposal.trim()) {
+            toast.error("Invalid Operation", {
+                description: "Please draft a project proposal before submitting."
+            });
+            return;
+        }
+
+        const submitBid = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) throw new Error("Authentication missing");
+
+            const { error } = await supabase
+                .from('bids')
+                .insert({
+                    mission_id: missionId,
+                    freelancer_id: user.id,
+                    proposal: proposal,
+                    match_score: alignment
+                });
+
+            if (error) throw error;
+            return true;
+        };
+        
+        toast.promise(submitBid(), {
+            loading: 'Submitting project proposal...',
+            success: () => {
+                setProposal("");
+                if (onSuccess) onSuccess();
+                return 'Proposal submitted. Your bid is now live.';
+            },
+            error: (err) => `Submission failed: ${err.message}`,
+        });
     };
 
     return (
@@ -72,8 +113,11 @@ Keywords like 'React', 'Node.js', and 'scalable' will increase your project rele
                     <Cpu className="w-3.5 h-3.5" />
                     AI Draft
                 </button>
-                <button className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-900 transition-all text-sm font-bold shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)]">
-                    Submit Bid
+                <button 
+                    onClick={handleSubmit}
+                    className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian-900 transition-all text-sm font-bold shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)]"
+                >
+                    Submit Proposal
                     <Send className="w-4 h-4" />
                 </button>
             </div>

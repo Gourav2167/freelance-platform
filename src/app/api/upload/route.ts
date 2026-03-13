@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
             text = data.text;
         } catch (e) {
             console.error("PDF Parsing failed. Falling back to mock text for demo purposes.", e);
-            text = "Project Scope: We need a scalable web architecture. Budget is roughly $50k. Timeline: 4 months. Tech stack includes React, Tailwind, and Node.js. Note: there are strict performance deadlines.";
+            text = "Project Scope: We need a scalable web architecture. Budget is roughly ₹40 Lakhs. Timeline: 4 months. Tech stack includes React, Tailwind, and Node.js. Note: there are strict performance deadlines.";
         }
 
         // Agent Task: "Semantic Chunking"
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
             } else {
                 // Fallback semantic categorization for UI Demo
                 const lower = doc.pageContent.toLowerCase();
-                if (lower.includes('budget') || lower.includes('$') || lower.includes('cost')) category = 'budget';
+                if (lower.includes('budget') || lower.includes('₹') || lower.includes('cost')) category = 'budget';
                 else if (lower.includes('tech') || lower.includes('react') || lower.includes('stack') || lower.includes('node') || lower.includes('architecture')) category = 'tech';
                 else if (lower.includes('timeline') || lower.includes('month') || lower.includes('week') || lower.includes('deadline')) category = 'timeline';
             }
