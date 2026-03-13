@@ -38,7 +38,16 @@ export default function Home() {
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent opacity-40" />
 
       <AIInterface />
-      <BiddingEditor />
+
+      {/* Persistent HUD Layers */}
+      <div className="fixed bottom-8 left-8 z-30 pointer-events-auto hero-animate">
+        <BiddingEditor />
+      </div>
+
+      <div className="fixed bottom-8 right-8 z-30 flex flex-col items-end gap-6 pointer-events-auto hero-animate">
+        <PDFUploader />
+        <RedactionPreview />
+      </div>
 
       {/* Hero Content Layer */}
       <div className="relative z-20 flex flex-col justify-center min-h-screen p-12 lg:p-24 pointer-events-none">
@@ -90,14 +99,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Interactive HUD Elements */}
-      <div className="fixed bottom-12 right-12 z-30 pointer-events-none hero-animate">
-        <RedactionPreview />
-      </div>
-
-      <div className="fixed bottom-12 left-12 z-30 pointer-events-auto hero-animate">
-        <PDFUploader />
-      </div>
     </main>
   );
 }

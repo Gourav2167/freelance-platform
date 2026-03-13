@@ -33,7 +33,7 @@ export default function BiddingEditor() {
     };
 
     return (
-        <div className="fixed bottom-8 left-8 w-[400px] glass-panel rounded-2xl p-5 pointer-events-auto border border-white/10 z-30 transition-transform hover:-translate-y-1 duration-500">
+        <div className="w-[400px] glass-panel rounded-2xl p-5 pointer-events-auto border border-white/10 z-30 transition-transform hover:-translate-y-1 duration-500">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-white font-semibold flex items-center gap-2 tracking-tight">
                     <Sparkles className="w-4 h-4 text-emerald-400" />

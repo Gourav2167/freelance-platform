@@ -5,9 +5,10 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 
 // Dynamically import the Nebula to avoid SSR Window issues completely
-const KnowledgeNebula = dynamic(() => import("./KnowledgeNebula"), {
-    ssr: false,
-});
+const KnowledgeNebula = dynamic(
+    () => import("./KnowledgeNebula").then((mod) => mod.default),
+    { ssr: false }
+);
 
 export default function SceneWrapper() {
     return (
