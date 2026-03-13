@@ -82,11 +82,17 @@ export default function BiddingEditor({ missionId = "demo-project-id", onSuccess
                 </h2>
                 <div className="flex items-center gap-2">
                     <span className="text-[10px] text-obsidian-200 uppercase tracking-widest font-bold">Match Score</span>
-                    <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white/20 shadow-[0_0_10px_rgba(255,255,255,0.1)] relative">
-                        <div className="absolute inset-0 pointer-events-none z-10 rounded-full shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]" />
-                        <Canvas orthographic camera={{ position: [0, 0, 1], zoom: 60 }} className="w-full h-full bg-obsidian-900">
-                            <AlignmentMeterShader alignment={alignment} />
-                        </Canvas>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center border-2 border-white/20 shadow-[0_0_10px_rgba(255,255,255,0.1)] relative bg-obsidian-900 overflow-hidden">
+                        <div 
+                            className="w-full h-full transition-all duration-700 ease-out"
+                            style={{ 
+                                background: `radial-gradient(circle at center, ${alignment > 0.6 ? '#10b981' : alignment > 0.3 ? '#f59e0b' : '#ef4444'} 0%, transparent 70%)`,
+                                opacity: 0.4 + (alignment * 0.6),
+                                transform: `scale(${0.8 + (alignment * 0.4)})`,
+                                filter: `blur(${4 * (1 - alignment)}px)`
+                            }}
+                        />
+                        <div className="absolute inset-0 border border-white/5 rounded-full pointer-events-none" />
                     </div>
                 </div>
             </div>
