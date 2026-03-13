@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/ui/Navigation";
-import dynamic from "next/dynamic";
-const SceneWrapper = dynamic(() => import("@/components/canvas/SceneWrapper"), { ssr: false });
+import nextDynamic from "next/dynamic";
+const SceneWrapper = nextDynamic(() => import("@/components/canvas/SceneWrapper"), { ssr: false });
 import { Inter, Outfit } from "next/font/google";
 
 const inter = Inter({
