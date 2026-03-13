@@ -15,6 +15,8 @@ const outfit = Outfit({
   variable: "--font-outfit",
 });
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Vasudha | Talent & Strategy Market",
   description: "Next-gen autonomous freelance ecosystem for global freelancers and strategic organizations.",

@@ -6,10 +6,16 @@ let client: SupabaseClient | null = null;
 export function createClient() {
     if (client) return client;
 
-    client = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+    if (!url || !key) {
+        return createBrowserClient(
+            'https://placeholder.supabase.co',
+            'placeholder'
+        );
+    }
+
+    client = createBrowserClient(url, key);
     return client;
 }
