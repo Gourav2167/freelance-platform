@@ -3,8 +3,9 @@ import { ChatOpenAI } from "@langchain/openai";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
-// @ts-expect-error - pdf-parse lacks proper default exports in its @types definition
-import pdf from "pdf-parse";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const pdf = require("pdf-parse");
 
 export async function POST(req: NextRequest) {
     try {

@@ -14,7 +14,6 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [authMode, setAuthMode] = useState<"login" | "signup">("login");
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-    const [errorMessage, setErrorMessage] = useState("");
     const [step, setStep] = useState<"role" | "auth">("role");
 
     const { setRole, role, syncProfile } = useUserStore();
@@ -66,7 +65,6 @@ export default function LoginPage() {
         if (!email || !password) return;
 
         setStatus("loading");
-        setErrorMessage("");
 
         if (authMode === "login") {
             const { error } = await supabase.auth.signInWithPassword({
@@ -77,7 +75,6 @@ export default function LoginPage() {
             if (error) {
                 console.error("LOGIN_ERROR:", error);
                 setStatus("error");
-                setErrorMessage(error.message);
                 toast.error("LOGIN FAILED", {
                     description: error.message
                 });
@@ -100,7 +97,6 @@ export default function LoginPage() {
 
             if (error) {
                 setStatus("error");
-                setErrorMessage(error.message);
                 toast.error("INITIALIZATION FAILED", {
                     description: error.message
                 });
