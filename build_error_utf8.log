@@ -1,0 +1,189 @@
+﻿
+> freelance-platform@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+node.exe :  ΓÜá Found lockfile missing 
+swc dependencies, patching...
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifi 
+   ed: ( ΓÜá Found lock...es, patching.  
+  ..:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeComm 
+   andError
+ 
+ Γ¿» Failed to patch lockfile, please 
+try uninstalling and reinstalling next 
+in this workspace
+TypeError: Cannot read properties of 
+undefined (reading 'os')
+    at fetchPkgInfo (C:\Users\Gourav\OneD
+rive\Desktop\vasudha\freelance-platform\n
+ode_modules\next\dist\lib\patch-incorrect
+-lockfile.js:73:25)
+    at process.processTicksAndRejections 
+(node:internal/process/task_queues:105:5)
+    at async Promise.all (index 7)
+    at async patchIncorrectLockfile (C:\U
+sers\Gourav\OneDrive\Desktop\vasudha\free
+lance-platform\node_modules\next\dist\lib
+\patch-incorrect-lockfile.js:162:26)
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+
+Failed to compile.
+
+./src/app/page.tsx
+47:6  Warning: React Hook useEffect has 
+a missing dependency: 'supabase'. Either 
+include it or remove the dependency 
+array.  react-hooks/exhaustive-deps
+77:9  Error: 'accentColor' is assigned a 
+value but never used.  
+@typescript-eslint/no-unused-vars
+79:9  Error: 'accentBorder' is assigned 
+a value but never used.  
+@typescript-eslint/no-unused-vars
+
+./src/app/profile/page.tsx
+5:32  Error: 'LogOut' is defined but 
+never used.  
+@typescript-eslint/no-unused-vars
+48:11  Error: 'handleSignOut' is 
+assigned a value but never used.  
+@typescript-eslint/no-unused-vars
+
+./src/components/canvas/NexusCore3D.tsx
+38:8  Warning: React Hook useMemo has a 
+missing dependency: 'reduced'. Either 
+include it or remove the dependency 
+array.  react-hooks/exhaustive-deps
+
+./src/components/dashboard/ContractTracke
+r.tsx
+5:10  Error: 'gsap' is defined but never 
+used.  @typescript-eslint/no-unused-vars
+43:70  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+
+./src/components/dashboard/FreelancerDash
+board.tsx
+4:10  Error: 'Suspense' is defined but 
+never used.  
+@typescript-eslint/no-unused-vars
+12:7  Error: 'DataCoreHologram' is 
+assigned a value but never used.  
+@typescript-eslint/no-unused-vars
+19:58  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+
+./src/components/dashboard/OrgDashboard.t
+sx
+4:39  Error: 'Search' is defined but 
+never used.  
+@typescript-eslint/no-unused-vars
+10:8  Error: 'ContractTracker' is 
+defined but never used.  
+@typescript-eslint/no-unused-vars
+15:7  Error: 'DataCoreHologram' is 
+assigned a value but never used.  
+@typescript-eslint/no-unused-vars
+22:50  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+23:54  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+67:8  Warning: React Hook useEffect has 
+a missing dependency: 'isLoading'. 
+Either include it or remove the 
+dependency array.  
+react-hooks/exhaustive-deps
+81:25  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+172:118  Error: `"` can be escaped with 
+`&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`. 
+ react/no-unescaped-entities
+172:133  Error: `"` can be escaped with 
+`&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`. 
+ react/no-unescaped-entities
+
+./src/components/dashboard/StatWidget.tsx
+4:10  Error: 'useEffect' is defined but 
+never used.  
+@typescript-eslint/no-unused-vars
+
+./src/components/explore/NexusOverlay.tsx
+85:25  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+97:39  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+145:59  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+145:80  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+166:86  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+166:115  Error: Unexpected any. Specify 
+a different type.  
+@typescript-eslint/no-explicit-any
+176:59  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+176:81  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+179:52  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+183:51  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+183:72  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+
+./src/components/MissionDeployment.tsx
+8:15  Error: 'Activity' is defined but 
+never used.  
+@typescript-eslint/no-unused-vars
+8:25  Error: 'ShieldCheck' is defined 
+but never used.  
+@typescript-eslint/no-unused-vars
+70:25  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+
+./src/components/ui/Navigation.tsx
+42:8  Warning: React Hook useEffect has 
+a missing dependency: 'logout'. Either 
+include it or remove the dependency 
+array.  react-hooks/exhaustive-deps
+
+./src/lib/userStore.ts
+8:11  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+59:39  Error: Unexpected any. Specify a 
+different type.  
+@typescript-eslint/no-explicit-any
+
+info  - Need to disable some ESLint 
+rules? Learn more here: https://nextjs.or
+g/docs/basic-features/eslint#disabling-ru
+les

@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm install --legacy-peer-deps && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "14.2.35",
     "@gsap/react": "^2.1.2",
     "@langchain/core": "^1.1.32",
     "@langchain/openai": "^1.2.13",
@@ -35,7 +36,6 @@
     "@react-three/fiber": "8.15.14"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^16.1.6",
     "@playwright/test": "^1.58.2",
     "@types/node": "^20",
     "@types/react": "^18",
