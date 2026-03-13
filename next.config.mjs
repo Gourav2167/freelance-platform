@@ -1,3 +1,4 @@
+// Vercel Deployment Optimization - Ref: da221c6
 import withBundleAnalyzer from '@next/bundle-analyzer';
 
 const analyzer = withBundleAnalyzer({
