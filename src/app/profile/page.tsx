@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
     const [loading, setLoading] = useState(true);
-    const [profile, setProfile] = useState<any>(null);
+    const [profile, setProfile] = useState<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
     const [error, setError] = useState<string | null>(null);
     const supabase = createClient();
     const router = useRouter();
@@ -33,9 +33,10 @@ export default function ProfilePage() {
 
                 if (profileError) throw profileError;
                 setProfile(data);
-            } catch (err: any) {
+            } catch (err: unknown) {
+                const errorMessage = err instanceof Error ? err.message : String(err);
                 console.error("Profile fetch error:", err);
-                setError(err.message);
+                setError(errorMessage);
             } finally {
                 setLoading(false);
             }
@@ -86,14 +87,7 @@ export default function ProfilePage() {
             <div className="fixed inset-0 z-0 bg-[radial-gradient(circle_at_40%_60%,_rgba(59,130,246,0.05),_transparent_50%)] pointer-events-none" />
 
             <div className="relative z-10 container mx-auto px-6">
-                <div className="flex justify-end mb-12">
-                    <button
-                        onClick={handleSignOut}
-                        className="group flex items-center gap-3 px-6 py-2.5 bg-rose-500/10 border border-rose-500/20 rounded-full text-rose-300 text-xs font-black uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-all"
-                    >
-                        Sign Out <LogOut className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                </div>
+                {/* Content rendering block */}
 
                 {profile?.role === "freelancer" ? (
                     <FreelancerProfile data={profile} />

@@ -61,6 +61,11 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: "/brand-icon.png",
+    shortcut: "/brand-icon.png",
+    apple: "/brand-icon.png",
+  },
 };
 
 import { Toaster } from 'sonner';

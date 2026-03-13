@@ -31,9 +31,8 @@
     "zustand": "^5.0.11"
   },
   "overrides": {
-    "@react-three/drei": {
-      "@react-three/fiber": "8.15.14"
-    }
+    "@react-three/drei": "9.102.0",
+    "@react-three/fiber": "8.15.14"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.1.6",

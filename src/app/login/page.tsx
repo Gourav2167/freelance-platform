@@ -27,7 +27,7 @@ export default function LoginPage() {
         const checkExistingSession = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             if (session) {
-                await syncProfile(supabase);
+                await syncProfile();
                 router.push("/dashboard");
             }
         };
@@ -47,12 +47,12 @@ export default function LoginPage() {
     }, [step]);
 
     useEffect(() => {
-        if (formRef.current && step === "auth") {
-            gsap.fromTo(formRef.current,
-                { opacity: 0, x: 20 },
-                { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }
-            );
-        }
+        if (!formRef.current || step !== "auth") return;
+
+        gsap.fromTo(formRef.current,
+            { opacity: 0, x: 20 },
+            { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }
+        );
     }, [authMode, step]);
 
     const handleRoleSelect = (selectedRole: UserRole) => {
@@ -81,9 +81,18 @@ export default function LoginPage() {
                 return;
             } 
             
-            setStatus("success");
-            toast.success("Authentication confirmed. Redirecting to dashboard...");
-            router.push("/dashboard");
+            try {
+                await syncProfile();
+                setStatus("success");
+                toast.success("Authentication confirmed. Redirecting to dashboard...");
+                router.push("/dashboard");
+            } catch (syncErr) {
+                console.error("POST_AUTH_SYNC_FAILED:", syncErr);
+                setStatus("error");
+                toast.error("PROFILE SYNC FAILED", {
+                    description: "Authenticated but profile could not be synchronized."
+                });
+            }
         } else {
             const { error } = await supabase.auth.signUp({
                 email,

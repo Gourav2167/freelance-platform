@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Filter, TrendingUp, Users } from "lucide-react";
+import { Search, TrendingUp, Users } from "lucide-react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
@@ -9,10 +9,15 @@ export default function TalentSearch() {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
-        gsap.fromTo(".talent-panel",
-            { x: 50, opacity: 0 },
-            { x: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" }
-        );
+        if (!containerRef.current) return;
+        
+        const panels = containerRef.current.querySelectorAll(".talent-panel");
+        if (panels.length > 0) {
+            gsap.fromTo(panels,
+                { x: 50, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" }
+            );
+        }
     }, { scope: containerRef });
 
     return (

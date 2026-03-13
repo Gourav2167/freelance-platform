@@ -14,26 +14,25 @@ export default function Navigation() {
     const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
     useEffect(() => {
-        const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session && (!isAuthenticated || !role)) {
-                await syncProfile(supabase);
-            }
-        };
-
-        checkSession();
-
+        // onAuthStateChange fires INITIAL_SESSION on mount
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
-            async (_event, session) => {
+            async (event, session) => {
                 if (session) {
-                    await syncProfile(supabase);
+                    const currentRole = useUserStore.getState().role;
+                    if (!currentRole || event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
+                        // Prevent concurrent syncs within the store's logic
+                        syncProfile().catch(err => console.error("NAV_SYNC_ERR", err));
+                    }
+                } else if (event === 'SIGNED_OUT') {
+                    logout();
                 }
             }
         );
 
         // Entrance Animation
-        if (navRef.current) {
-            gsap.fromTo(navRef.current,
+        const navEl = navRef.current;
+        if (navEl) {
+            gsap.fromTo(navEl,
                 { y: -100, opacity: 0 },
                 { y: 0, opacity: 1, duration: 1.2, ease: "expo.out", delay: 0.5 }
             );

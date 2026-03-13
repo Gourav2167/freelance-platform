@@ -47,18 +47,28 @@ export default function Home() {
   }, []);
 
   useGSAP(() => {
+    // Only run if the container is available
+    if (!containerRef.current) return;
+
     const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-    tl.fromTo(".hero-animate",
-      { y: 60, opacity: 0 },
-      { y: 0, opacity: 1, stagger: 0.15, duration: 2, delay: 0.5 }
-    );
+    // Use a more robust selector within scope
+    const heroElements = containerRef.current.querySelectorAll(".hero-animate");
+    if (heroElements.length > 0) {
+      tl.fromTo(heroElements,
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.15, duration: 2, delay: 0.5 }
+      );
+    }
 
-    tl.fromTo(".shimmer-bar",
-      { width: 0 },
-      { width: "100%", duration: 1.5, ease: "power4.inOut" },
-      "-=1.5"
-    );
+    const shimmerBars = containerRef.current.querySelectorAll(".shimmer-bar");
+    if (shimmerBars.length > 0) {
+      tl.fromTo(shimmerBars,
+        { width: 0 },
+        { width: "100%", duration: 1.5, ease: "power4.inOut" },
+        "-=1.5"
+      );
+    }
   }, { scope: containerRef });
 
   if (!mounted) return null;
@@ -68,7 +78,6 @@ export default function Home() {
   const accentText = isOrg ? "text-blue-500" : "text-emerald-500";
   const accentBorder = isOrg ? "border-blue-500/50" : "border-emerald-500/50";
   const accentBg = isOrg ? "bg-blue-500" : "bg-emerald-500";
-  const accentShadow = isOrg ? "shadow-blue-500/20" : "shadow-emerald-500/20";
 
   return (
     <main ref={containerRef} className="relative min-h-screen w-full overflow-hidden">

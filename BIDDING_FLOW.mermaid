@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant F as Freelancer
+    participant HUD as UI HUD (BiddingEditor)
+    participant NC as Nexus Core (3D Scene)
+    participant DB as Supabase (PostgreSQL)
+    participant O as Organization
+
+    Note over F, NC: Discovery Phase
+    F->>NC: Interacts with 3D Starfield
+    NC->>F: Visual Feedback (Hover/Select)
+    F->>HUD: Opens Mission Details
+
+    Note over HUD, DB: Bidding Phase
+    F->>HUD: Enters Bid (Amount ₹ + Message)
+    HUD->>HUD: Validates Inputs
+    HUD->>DB: INSERT INTO bids (mission_id, freelancer_id, amount)
+    DB-->>HUD: Confirm Success
+    HUD->>F: Display Success Notification (Sonner)
+
+    Note over DB, O: Management Phase
+    DB->>O: Real-time update (RLS filter)
+    O->>DB: Reviews Bids
+    O->>F: Initiates "Connection" (Contract Negotiation)
