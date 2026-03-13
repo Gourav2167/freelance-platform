@@ -19,9 +19,6 @@ const SceneWrapper = React.memo(function SceneWrapper() {
     const isLoginPage = pathname === "/login";
     const isExplorePage = pathname === "/explore";
 
-    // Prevent redundant WebGL context creation on explore page
-    if (isExplorePage) return null;
-
     React.useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => setIsVisible(entry.isIntersecting),
@@ -30,6 +27,9 @@ const SceneWrapper = React.memo(function SceneWrapper() {
         if (containerRef.current) observer.observe(containerRef.current);
         return () => observer.disconnect();
     }, []);
+
+    // Prevent redundant WebGL context creation on explore page
+    if (isExplorePage) return null;
 
     return (
         <div ref={containerRef} className="absolute inset-0 pointer-events-none w-full h-full">
