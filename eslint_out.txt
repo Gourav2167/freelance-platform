@@ -1,0 +1,13 @@
+﻿
+C:\Users\Gourav\OneDrive\Desktop\vasudha\freelance-platform\src\app\api\upload\route.ts
+  41:20  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  63:26  error  'e' is defined but never used             @typescript-eslint/no-unused-vars
+
+C:\Users\Gourav\OneDrive\Desktop\vasudha\freelance-platform\src\components\canvas\KnowledgeNebula.tsx
+    3:27  error  'useEffect' is defined but never used  @typescript-eslint/no-unused-vars
+   72:22  error  'delta' is defined but never used      @typescript-eslint/no-unused-vars
+  125:36  error  'i' is defined but never used          @typescript-eslint/no-unused-vars
+  164:47  error  'shader' is defined but never used     @typescript-eslint/no-unused-vars
+
+Γ£û 6 problems (6 errors, 0 warnings)
+

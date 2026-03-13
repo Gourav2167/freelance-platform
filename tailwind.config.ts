@@ -9,8 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        obsidian: {
+          900: '#030305',
+          800: '#0a0a0f',
+          700: '#12121a',
+        },
+        accent: {
+          glow: 'rgba(255, 255, 255, 0.2)',
+        }
       },
     },
   },
